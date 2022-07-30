@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     <meta charset="UTF-8">
+     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Document</title>
+     <link rel="stylesheet" href="bootstrap.css">
+     <link rel="stylesheet" href="weather.css">
+</head>
+<body>
+     <div class="container" id="main">
+          <div col-md-6 col-sm-5 col-8 d-flex>
+                    <input   type="text" id="input-box"placeholder="search"  value="rohtak">
+          <button onclick="searchselecter()" >&#128269</button>
+          <br>
+          <h2> Weather in </h2><h2 id="city"><b>Rohtak</b></h2>
+
+          <br>
+          <div id="details">
+               <h3 class="vrn"><b> Temp: </b></h3>
+               <h3 id="temp"> </h3>
+               <br><br>
+               <h3 class="vrn"><b> Sky: </b></h3>
+               <h3 id="cloud"> </h3>
+               <br><br>
+               <h3 class="vrn"><b> Humidity: </b></h3>
+               <h3 id="humidity"></h3> 
+               
+               <h3> </h3>
+          </div>
+     </div>
+</div>
+     
+     <script>
+
+
+          const weatherApi ={ 
+               
+     baseurl:"https://api.openweathermap.org/data/2.5/weather",
+
+     key:"814f1c076413f8c1f396877167e2a907"
+     }
+    function searchselecter()
+     {
+         input= document.getElementById("input-box") .value
+         console.log(input)
+         getweatherreport(input)
+         
+     }
+     function  getweatherreport(city)
+     {
+          fetch(`${weatherApi.baseurl}?q=${city}&appid=${weatherApi.key}&units=metric`).then(weather => {
+        return weather.json();
+    }).then(showweather);
+     }
+
+     function showweather(weather)
+     {
+        console.log(weather); 
+
+        let temp=document.getElementById("temp")
+        temp.innerHTML=`${weather.main.temp} °C`;
+
+        let city= document.getElementById("city")
+        city.innerHTML=`${weather.name},${weather.sys.country}`;
+
+        let cloud= document.getElementById("cloud")
+        cloud.innerHTML=`${weather.weather[0].description}`;
+
+        let humid= document.getElementById("humidity")
+        humid.innerHTML=`${weather.main.humidity}`;
+
+
+        
+     }
+
+
+
+
+
+
+
+
+
+
+        
+
+
+   </script>
+</body>
+</html>
